@@ -1,8 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'dart:html';
-
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class MyCards extends StatefulWidget {
@@ -14,6 +13,26 @@ class MyCards extends StatefulWidget {
 
 class _MyCardsState extends State<MyCards> {
   int _currentIndex = 0;
+  int _transactionIndex = DateTime.parse(DateTime.now().toString()).month - 1;
+  String finalMonth = "";
+
+  var date = DateTime.now().toString();
+
+  final List<String> _month = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec'
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,125 +50,198 @@ class _MyCardsState extends State<MyCards> {
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),
-      body: Stack(children: [
-        Container(
-          decoration: BoxDecoration(
-            gradient: RadialGradient(
-              radius: 0.7,
-              colors: [
-                Colors.lightBlue,
-                Colors.deepPurple,
-              ],
-            ),
-          ),
-          child: Column(
-            children: <Widget>[
-              SizedBox(
-                height: 55,
-              ),
-              Center(
-                child: Wrap(
-                  children: [
-                    Column(
-                      children: [
-                        CarouselSlider(
-                          items: [
-                            CardSlider("*3425"),
-                            CardSlider("Card 2"),
-                            CardSlider("Card 3"),
-                          ],
-                          options: CarouselOptions(
-                            onPageChanged: (index, reason) {
-                              setState(
-                                () {
-                                  _currentIndex = index;
-                                },
-                              );
-                            },
-                            enableInfiniteScroll: false,
-                            autoPlay: false,
-                            enlargeCenterPage: true,
-                            viewportFraction: 0.8,
-                            aspectRatio: 2.0,
-                            initialPage: 0,
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            for (int i = 0; i < 3; i++)
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  width: 8.0,
-                                  height: 8.0,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: _currentIndex == i
-                                        ? Colors.white
-                                        : Color.fromARGB(115, 224, 224, 224),
-                                  ),
-                                ),
-                              ),
-                          ],
-                        )
-                      ],
-                    ),
-                    Card(
-                      color: Colors.transparent,
-                      borderOnForeground: true,
-                      elevation: 0,
-                      margin: const EdgeInsets.symmetric(horizontal: 24),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        side: BorderSide(
-                          color: Color.fromARGB(122, 158, 158, 158),
-                          width: 1.0,
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Functional("https://picsum.photos/200", "Transfer"),
-                          Functional("https://picsum.photos/200", "Blocked"),
-                          Functional("https://picsum.photos/200", "Frosts"),
-                        ],
-                      ),
-                    ),
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Positioned(
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: RadialGradient(
+                  radius: 0.7,
+                  colors: [
+                    Colors.lightBlue,
+                    Colors.deepPurple,
                   ],
                 ),
               ),
-            ],
+              child: Column(
+                children: <Widget>[
+                  SizedBox(
+                    height: 55,
+                  ),
+                  Flexible(
+                    child: CarouselSlider(
+                      items: [
+                        CardSlider("*3425"),
+                        CardSlider("Card 2"),
+                        CardSlider("Card 3"),
+                      ],
+                      options: CarouselOptions(
+                        onPageChanged: (index, reason) {
+                          setState(
+                            () {
+                              _currentIndex = index;
+                            },
+                          );
+                        },
+                        enableInfiniteScroll: false,
+                        autoPlay: false,
+                        enlargeCenterPage: true,
+                        viewportFraction: 0.8,
+                        aspectRatio: 2.0,
+                        initialPage: 0,
+                      ),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      for (int i = 0; i < 3; i++)
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            width: 8.0,
+                            height: 8.0,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: _currentIndex == i
+                                  ? Colors.white
+                                  : Color.fromARGB(115, 224, 224, 224),
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                  Card(
+                    color: Colors.transparent,
+                    borderOnForeground: true,
+                    elevation: 1,
+                    margin: const EdgeInsets.symmetric(horizontal: 24),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      side: BorderSide(
+                        color: Color.fromARGB(64, 255, 255, 255),
+                        width: 1.0,
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Functional("https://picsum.photos/200", "Transfer"),
+                        Functional("https://picsum.photos/200", "Blocked"),
+                        Functional("https://picsum.photos/200", "Frosts"),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
-        ),
-        SizedBox.expand(
-          child: DraggableScrollableSheet(
-            initialChildSize: 0.5,
-            minChildSize: 0.5,
-            maxChildSize: 1,
-            builder: (context, scrollController) {
-              return Container(
-                decoration: BoxDecoration(
-                  color: Colors.black,
+          Positioned(
+            child: DraggableScrollableSheet(
+              initialChildSize: 0.5,
+              minChildSize: 0.4,
+              maxChildSize: 0.94,
+              builder: (context, scrollController) {
+                return Material(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(20),
                     topRight: Radius.circular(20),
                   ),
-                ),
-                child: ListView.builder(
-                  controller: scrollController,
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text("Card $index"),
-                    );
-                  },
-                ),
-              );
-            },
+                  color: Colors.black,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 10,
+                          ),
+                          child: Container(
+                              height: 2, width: 40, color: Colors.white),
+                        ),
+                      ),
+                      //SizedBox(height: 12),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: DropdownButton<String>(
+                          value: _month[_transactionIndex],
+                          isExpanded: true,
+                          dropdownColor: Colors.transparent,
+                          menuMaxHeight: 150,
+                          elevation: 2,
+                          underline: Container(),
+                          items: _month
+                              .map(
+                                (e) => DropdownMenuItem<String>(
+                                  onTap: () {
+                                    _transactionIndex = _month.indexOf(e);
+                                  },
+                                  value: e,
+                                  child: RichText(
+                                    text: TextSpan(
+                                      text: 'Transaction ',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w600),
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          text: e,
+                                          style: TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 255, 145, 190),
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w600),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                          onChanged: (value) {
+                            // ignore: avoid_print
+                            print(value);
+                            setState(() {});
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        child: ListView.builder(
+                          padding: EdgeInsets.only(top: 0),
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          controller: scrollController,
+                          itemCount: 30,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                ListTile(
+                                  minVerticalPadding: 0,
+                                  title: Text(
+                                    "Card $index",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                                Divider(
+                                    color: Color.fromARGB(50, 253, 253, 253),
+                                    thickness: 1),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
-        ),
-      ]),
+        ],
+      ),
     );
   }
 }
@@ -208,17 +300,17 @@ class CardSlider extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Expanded(
-            child: Stack(
-              children: [
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    txt,
-                    style: TextStyle(fontSize: 14, color: Colors.white),
-                  ),
+          child: Stack(
+            children: [
+              Positioned.directional(
+                textDirection: TextDirection.ltr,
+                child: Text(
+                  txt,
+                  style: TextStyle(fontSize: 14, color: Colors.white),
                 ),
-                Column(
+              ),
+              Positioned(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     SizedBox(
@@ -253,8 +345,8 @@ class CardSlider extends StatelessWidget {
                     ),
                   ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

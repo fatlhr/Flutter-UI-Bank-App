@@ -14,8 +14,7 @@ class MyCards extends StatefulWidget {
 class _MyCardsState extends State<MyCards> {
   int _currentIndex = 0;
   int _transactionIndex = DateTime.parse(DateTime.now().toString()).month - 1;
-  String finalMonth = "";
-
+  int _day = DateTime.parse(DateTime.now().toString()).day;
   var date = DateTime.now().toString();
 
   final List<String> _month = [
@@ -32,7 +31,6 @@ class _MyCardsState extends State<MyCards> {
     'Nov',
     'Dec'
   ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -210,28 +208,85 @@ class _MyCardsState extends State<MyCards> {
                       ),
                       Expanded(
                         child: ListView.builder(
-                          padding: EdgeInsets.only(top: 0),
-                          scrollDirection: Axis.vertical,
                           shrinkWrap: true,
-                          controller: scrollController,
-                          itemCount: 30,
-                          itemBuilder: (context, index) {
-                            return Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                ListTile(
-                                  minVerticalPadding: 0,
-                                  title: Text(
-                                    "Card $index",
-                                    style: TextStyle(color: Colors.white),
+                          physics: ClampingScrollPhysics(),
+                          controller: ScrollController(),
+                          padding: const EdgeInsets.all(0),
+                          itemBuilder: (BuildContext context, int index) =>
+                              Wrap(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0),
+                                child: Text(
+                                  "$_day ${_month[_transactionIndex]} 2022",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w600,
                                   ),
                                 ),
-                                Divider(
-                                    color: Color.fromARGB(50, 253, 253, 253),
-                                    thickness: 1),
-                              ],
-                            );
-                          },
+                              ),
+                              ListView.builder(
+                                physics: ClampingScrollPhysics(),
+                                controller: scrollController,
+                                scrollDirection: Axis.vertical,
+                                padding: EdgeInsets.only(top: 0),
+                                shrinkWrap: true,
+                                itemCount: 2,
+                                itemBuilder: (context, index) {
+                                  return Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      ListTile(
+                                        minVerticalPadding: 0,
+                                        title: Text(
+                                          "Dribble $index",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 16),
+                                        ),
+                                        subtitle: Text(
+                                          "$_day ${_month[_transactionIndex]} 2022",
+                                          style: TextStyle(
+                                              color: Colors.grey, fontSize: 12),
+                                        ),
+                                        leading: Image.asset(
+                                          "assets/dribble.png",
+                                          height: 40,
+                                          fit: BoxFit.cover,
+                                        ),
+                                        trailing: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.end,
+                                          children: [
+                                            Text(
+                                              "-\$100,00",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 16),
+                                            ),
+                                            Text(
+                                              "01.00 PM",
+                                              style: TextStyle(
+                                                  color: Colors.grey,
+                                                  fontSize: 12),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      Divider(
+                                          color:
+                                              Color.fromARGB(50, 253, 253, 253),
+                                          thickness: 1),
+                                    ],
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],

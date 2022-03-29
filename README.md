@@ -1,16 +1,10 @@
 # flutter_ui_bank_app
 
-A new Flutter project.
+Slicing UI dari mockup figma.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Sumber Desain
+> https://www.figma.com/community/file/1070555473008827243/Bank-app-design
+## ScreenShot
+|Dashboard| Scroll List|
+|------------|------------|
+| <img src="https://user-images.githubusercontent.com/45925242/160627837-3ab2d06b-4d09-414e-8162-ed272d22a54c.png" width="300"> |<img src="https://user-images.githubusercontent.com/45925242/160628118-ed0a8dbc-5209-4c6a-a0e2-ea7edb280cc1.png" width="300"> |
